@@ -2,10 +2,8 @@ import { Injectable, NgModule } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { $$ } from 'protractor';
 import { Log } from '../clases/log';
 import { Usuario } from '../clases/usuario';
-
 
 @Injectable({
   providedIn: 'root'
@@ -58,33 +56,6 @@ export class AuthService {
     const id = this.afs.createId();
     return this.afs.collection('/logs').doc(id).set(log.toJson());
   }
-
-
-
-
-/*   guardarLog(email:string,accion : string){
-    let date = new Date();
-
-    let user = new Usuario();
-    user.email = email;
-
-    let log = new Log();
-    log.fecha = date.toLocaleDateString();
-    log.usuario = user;
-    log.accion = accion;
-
-    const usuario = {
-      email : log.usuario.email
-    };
-
-    const obj = {
-      fecha : log.fecha,
-      usuario : usuario,
-      accion : log.accion
-    };
-    const id = this.afs.createId();
-    return this.afs.collection('/logs').doc(id).set(obj);
-  } */
 
   //esto lo que hace es guardar en la base una coleccion llamada users 
   // y la const user lo toma como un obj json

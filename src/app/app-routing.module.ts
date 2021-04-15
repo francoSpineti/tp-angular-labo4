@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ChatRoomComponent } from './componentes/chat/chat-room/chat-room.component';
+import { ListadoComponent } from './componentes/chat/listado/listado.component';
 import { ErrorComponent } from './componentes/error/error.component';
 import { HomeComponent } from './componentes/home/home.component';
 import { MemotestComponent } from './componentes/memotest/memotest.component';
@@ -16,6 +18,10 @@ const routes: Routes = [
                         {path:'memotest', component : MemotestComponent},
                         {path:'ppt', component : PiedraPapelTijeraComponent},
                         {path:'quien-soy', component : QuienSoyComponent},
+                        {path:'ppt', component : PiedraPapelTijeraComponent},
+                        {path:'tateti', component : TatetiComponent},
+                        {path:'chat', component : ChatRoomComponent},
+                        {path: 'listado', component: ListadoComponent },
                         {path:'**', component : ErrorComponent} //siempre tiene que ir ultimo
 ];
 

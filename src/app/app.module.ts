@@ -17,6 +17,9 @@ import { PiedraPapelTijeraComponent } from './componentes/piedra-papel-tijera/pi
 import { IngresoRoutingModule } from './componentes/ingreso/ingreso-routing.module';
 import { LoginComponent } from './componentes/ingreso/login/login.component';
 import { RegistroComponent } from './componentes/ingreso/registro/registro.component';
+import { ChatRoomComponent } from './componentes/chat/chat-room/chat-room.component';
+import { ListadoComponent } from './componentes/chat/listado/listado.component';
+import { ChatUsuarioComponent } from './componentes/chat/chat-usuario/chat-usuario.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { RegistroComponent } from './componentes/ingreso/registro/registro.compo
     TatetiComponent,
     PiedraPapelTijeraComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    ChatRoomComponent,
+    ListadoComponent,
+    ChatUsuarioComponent
   ],
   imports: [
     BrowserModule,
