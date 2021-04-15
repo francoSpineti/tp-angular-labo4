@@ -20,6 +20,7 @@ import { RegistroComponent } from './componentes/ingreso/registro/registro.compo
 import { ChatRoomComponent } from './componentes/chat/chat-room/chat-room.component';
 import { ListadoComponent } from './componentes/chat/listado/listado.component';
 import { ChatUsuarioComponent } from './componentes/chat/chat-usuario/chat-usuario.component';
+import { ChatFormComponent } from './componentes/chat/chat-form/chat-form.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ChatUsuarioComponent } from './componentes/chat/chat-usuario/chat-usuar
     RegistroComponent,
     ChatRoomComponent,
     ListadoComponent,
-    ChatUsuarioComponent
+    ChatUsuarioComponent,
+    ChatFormComponent
   ],
   imports: [
     BrowserModule,
