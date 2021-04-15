@@ -17,7 +17,7 @@ const routes: Routes = [
                         {path:'tateti', component : TatetiComponent},
                         {path:'memotest', component : MemotestComponent},
                         {path:'ppt', component : PiedraPapelTijeraComponent},
-                        {path:'quien-soy', component : QuienSoyComponent},
+                        {path:'quienSoy', component : QuienSoyComponent},
                         {path:'ppt', component : PiedraPapelTijeraComponent},
                         {path:'tateti', component : TatetiComponent},
                         {path:'chat', component : ChatRoomComponent},
