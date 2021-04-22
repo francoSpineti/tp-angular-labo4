@@ -8,22 +8,23 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+   email : string = "";
+   password : string = "";
+
   constructor(private authService : AuthService) { }
 
   ngOnInit(): void {}
 
-  /** Funcion para loguearse
-   * 
-   * Cuando ingresamos email y pass
-   * viene a esta funcion, luego va al servicio
-   * y verifica si es correcto lo que se ingreso.
-   */
-   login(email : string,contraseña :string){
-    this.authService.iniciarSesion(email, contraseña).then((result) => {
+   login(){
+    this.authService.iniciarSesion(this.email,this.password).then((result) => {
     }).catch((error) => {
       alert("ERROR: datos incorrectos");
-      console.info(error);
     });
-  } 
+  }
+
+  accesoRapido(){
+    this.email = "ejemplo@a.com";
+    this.password = "123456";
+  }
 
 }

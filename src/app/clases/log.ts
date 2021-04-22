@@ -1,24 +1,19 @@
-import { Usuario } from './usuario';
-
 export class Log {
 
     fecha : string = "";
-    usuario : Usuario = new Usuario();
+    email : string = "";
     accion : string = "";
 
-    constructor(fecha : string, usuario : Usuario, accion : string){
+    constructor(fecha : string, email : string, accion : string){
         this.fecha = fecha;
-        this.usuario = usuario;
+        this.email = email;
         this.accion = accion;
     }
 
     toJson() : any{
-        const user = {
-            email : this.usuario.email
-        };
         const json ={
             fecha : this.fecha,
-            usuario : user,
+            email : this.email,
             accion : this.accion
         };
         return json;

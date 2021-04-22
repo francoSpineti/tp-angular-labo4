@@ -2,17 +2,23 @@ import { Injectable, NgModule } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { $$ } from 'protractor';
 import { Log } from '../clases/log';
+import { Observable } from 'rxjs';
 import { Usuario } from '../clases/usuario';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public firebaseAuth : AngularFireAuth, public router: Router,private afs: AngularFirestore) { }
+  private dbpath='/usuarios';
+  users : Observable<Usuario[]>;
+  mensajes !: AngularFirestoreCollection<any>;
+
+  constructor(public firebaseAuth : AngularFireAuth, public router: Router,private afs: AngularFirestore) { 
+    this.mensajes = afs.collection<any>(this.dbpath);
+    this.users = this.mensajes.valueChanges();
+  }
 
   async iniciarSesion(email : string, contraseña : string){
     let result = await this.firebaseAuth.signInWithEmailAndPassword(email, contraseña)  // aca verifica con firebase el email y pass si existe
@@ -49,56 +55,23 @@ export class AuthService {
 
   guardarLog(email:string,accion : string){
     let date = new Date();
-
-    let user = new Usuario();
-    user.email = email;
-
-    let log = new Log(date.toLocaleDateString(),user,accion);
-
+    let log = new Log(date.toLocaleDateString(),email,accion);
     const id = this.afs.createId();
     return this.afs.collection('/logs').doc(id).set(log.toJson());
   }
 
+  async getCurrentUser(){
+    return this.firebaseAuth.authState.pipe().toPromise();
+  }
 
+  getAll(){
+    return this.users;
+  }
 
+  create(mensaje:any):any{
+    return this.mensajes.add({...mensaje});
 
-/*   guardarLog(email:string,accion : string){
-    let date = new Date();
+  }
 
-    let user = new Usuario();
-    user.email = email;
-
-    let log = new Log();
-    log.fecha = date.toLocaleDateString();
-    log.usuario = user;
-    log.accion = accion;
-
-    const usuario = {
-      email : log.usuario.email
-    };
-
-    const obj = {
-      fecha : log.fecha,
-      usuario : usuario,
-      accion : log.accion
-    };
-    const id = this.afs.createId();
-    return this.afs.collection('/logs').doc(id).set(obj);
-  } */
-
-  //esto lo que hace es guardar en la base una coleccion llamada users 
-  // y la const user lo toma como un obj json
-/*   addUser(email: any) {
-    const date = new Date();
-    const user = {
-      createdAt: date.toLocaleDateString(),
-      id: Math.floor(Math.random() * Math.floor(500)),
-      name: email.split('@')[0],
-      mail: email
-    };
-    console.log(user);
-    const id = this.afs.createId();
-    return this.afs.collection('/users').doc(id).set(user);
-  } */
 
 }

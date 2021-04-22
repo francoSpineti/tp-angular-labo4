@@ -17,6 +17,11 @@ import { PiedraPapelTijeraComponent } from './componentes/piedra-papel-tijera/pi
 import { IngresoRoutingModule } from './componentes/ingreso/ingreso-routing.module';
 import { LoginComponent } from './componentes/ingreso/login/login.component';
 import { RegistroComponent } from './componentes/ingreso/registro/registro.component';
+import { ChatComponent } from './componentes/chat/chat.component';
+import { FooterMenuComponent } from './componentes/footer-menu/footer-menu.component';
+import { UsuariosConectadosComponent } from './componentes/usuarios-conectados/usuarios-conectados.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +34,10 @@ import { RegistroComponent } from './componentes/ingreso/registro/registro.compo
     TatetiComponent,
     PiedraPapelTijeraComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    ChatComponent,
+    FooterMenuComponent,
+    UsuariosConectadosComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +45,8 @@ import { RegistroComponent } from './componentes/ingreso/registro/registro.compo
     IngresoRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Convert, Paises } from 'src/app/interfaces/paises';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { PaisesService } from 'src/app/servicios/paises.service';
 
 @Component({
   selector: 'app-menu',
@@ -8,9 +10,19 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(public authService : AuthService) { }
+  @Input() usuarioEnSesion : string = "";
+  @Input() estaLogueado : boolean = false;
+
+  constructor(public authService : AuthService, private paises : PaisesService) { }
 
   ngOnInit(): void {
+    let obj = localStorage.getItem('user');
+    if(obj != null){
+      this.estaLogueado = true;
+      let cadena : any = obj?.split(":",6)[4];
+      let email = cadena.split(",")[0];
+      this.usuarioEnSesion = email;
+    }
   }
 
   logOut(){

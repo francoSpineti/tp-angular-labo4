@@ -1,0 +1,87 @@
+<app-menu></app-menu>  
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+    <div class="row">
+        <div class="card col-sm-4 " #scrollMe  [scrollTop]="scrollMe.scrollHeight">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Usuarios En Linea</h5>
+                </div>
+               <app-usuarios-conectados></app-usuarios-conectados>
+            </li>            
+          </ul>
+        </div>
+        
+        <div class="col-sm-8">
+          <div class="chatbody">
+
+            <table class="table">
+              <tr>
+                <td>CHAT GENERAL - SALA DE JUEGOS</td>
+              </tr>
+            </table>
+
+            <div class="card-body overflow-auto" style="height: 250px;" #scrollMe  [scrollTop]="scrollMe.scrollHeight">
+              <div *ngFor="let mensaje of chat">
+                  <div class="card-text border my-1" 
+                  [ngClass]="{'border-info rounded-left ml-3 px-3 bg-info': mensaje.usuario == usuarioEnSesion,
+                  'border-warning rounded-right mr-3 px-2 bg-warning': mensaje.usuario != usuarioEnSesion}">{{mensaje.mensaje}}
+                      <p class="time-text text-right mb-0" >{{mensaje.usuario}} <span class="time-text">{{mensaje.horaEnvio.toMillis() | date:'dd/MM/yyyy h:mm:ss a'}}</span></p>
+                  </div>
+              </div>
+          </div>
+
+    
+          </div>
+
+          <div class="row">
+            <div class="input-group">
+              <input type="text" class="form-control" (keyup.enter)="enviar()" placeholder="Escriba su mensaje..." [(ngModel)]="mensajeChat.mensaje">
+              <div class="input-group-append">
+                  <button class="btn btn-outline-info" type="button" (click)="enviar()">Enviar</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- <div class="chatitems" *ngIf="usuarioEnSesion">
+    <div class="card shadow-lg " style="width: 20rem" *ngIf="chatActivo">
+        <div class="card-header">
+            Chat general
+            <button type="button" class="close" (click)="chatActivo = false">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="card-body overflow-auto" style="height: 250px;" #scrollMe  [scrollTop]="scrollMe.scrollHeight">
+            <div *ngFor="let mensaje of chat">
+                <div class="card-text border my-1" 
+                [ngClass]="{'border-info rounded-left ml-3 px-3 bg-info': mensaje.usuario == usuarioEnSesion,
+                'border-warning rounded-right mr-3 px-2 bg-warning': mensaje.usuario != usuarioEnSesion}">{{mensaje.mensaje}}
+                    <p class="time-text text-right mb-0" >{{mensaje.usuario}} <span class="time-text">{{mensaje.horaEnvio.toMillis() | date:'dd/MM/yyyy h:mm:ss a'}}</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="input-group">
+                <input type="text" class="form-control" (keyup.enter)="enviar()" placeholder="Escriba su mensaje..." [(ngModel)]="mensajeChat.mensaje">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="button" (click)="enviar()">Enviar</button>
+                </div>
+              </div>
+        </div>
+    </div>
+    <button class="btn btn-secondary rounded border-primary shadow-lg " *ngIf="!chatActivo" (click)="chatActivo = true"></button>
+</div> -->
