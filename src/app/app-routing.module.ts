@@ -17,8 +17,8 @@ const routes: Routes = [
                         {path:'quienSoy', component : QuienSoyComponent},
                         {path:'ppt', component : PiedraPapelTijeraComponent},
                         {path:'tateti', component : TatetiComponent},
-                        {path:'chat', component : ChatComponent},
-                        {path:'**', component : ErrorComponent}
+                        {path:'chat', component : ChatComponent},                        
+                        {path:'**', component : ErrorComponent} //siempre tiene que ir ultimo
 ];
 
 @NgModule({

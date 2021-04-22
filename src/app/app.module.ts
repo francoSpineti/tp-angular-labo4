@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './componentes/home/home.component';
@@ -22,7 +21,6 @@ import { FooterMenuComponent } from './componentes/footer-menu/footer-menu.compo
 import { UsuariosConectadosComponent } from './componentes/usuarios-conectados/usuarios-conectados.component';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
     RegistroComponent,
     ChatComponent,
     FooterMenuComponent,
-    UsuariosConectadosComponent
+    UsuariosConectadosComponent,
   ],
   imports: [
     BrowserModule,
