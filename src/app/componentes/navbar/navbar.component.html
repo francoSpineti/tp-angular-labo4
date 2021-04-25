@@ -1,0 +1,61 @@
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+    <img src="../favicon.ico" width="50" height="50" alt="">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/menu">
+            <i class="bi bi-house-door"></i>
+            Home
+            <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/juegos">
+              <i class="bi bi-controller">
+            </i>
+            Juegos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/quienSoy">
+            <i class="bi bi-person-badge">
+            </i>
+            Quien Soy
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/chat">
+            <i class="bi bi-chat-dots">
+            </i>
+            Sala de Chat
+          </a>
+        </li>
+  
+      </ul>
+  
+      <ul class="navbar-nav ">
+        
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="estaLogueado">
+            Bienvenido!  {{usuarioEnSesion}}
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-gear-wide-connected"></i>
+            Opciones
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" (click)="logOut()">CerrarSesion</a></li>
+          </ul>
+        </li>
+      </ul> 
+  
+    </div>
+  </nav>

@@ -1,27 +1,16 @@
-<div class="container">
-  <div class="row">
-      <div class="col-md-6">
-          <div class="card">
-               <div class="box">
-                  <h1>Login</h1>
-                  <p class="text-muted"> Bienvenido. Por favor ingrese su email y contraseña.</p>
+<form class="form-signin" [formGroup]="formGroup" (ngSubmit)="login()">
+  <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+  <label for="inputEmail" class="sr-only">Email</label>
 
+  <input type="email" id="inputEmail" class="form-control" placeholder="Ingrese email" formControlName="email">
+  <small class="invalid" *ngIf="formGroup.controls['email'].errors?.required && formGroup.controls['email'].touched">El email es requerido</small>
+  <small class="invalid" *ngIf="formGroup.controls['email'].errors?.email && formGroup.controls['email'].touched">El formato es invalido</small>
 
-                  <input type="text" placeholder="Email" [(ngModel)]="email"> 
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" formControlName="contraseña">
+  <small class="invalid" *ngIf="formGroup.controls['contraseña'].errors?.required && formGroup.controls['contraseña'].touched">La contraseña es requerida</small>
 
-                  <input type="password" placeholder="Contraseña" [(ngModel)]="password"> 
-
-                  <input type="submit" (click)="login()" value="Login"> 
-
-                  <input type="button"  (click)="accesoRapido()" value="Acceso Rapido" >  <!--    ponerlo al lado    -->
-
-                  <input type="button"  routerLink="/registro" value="Registro" >  <!--    ponerlo abajo    -->
-                  <div class="col-md-12">
-                      <ul class="social-network social-circle">
-                          <!-- <li><a href="#" class="icoGoogle" title="Google +"><i class="fab fa-google-plus"></i></a></li> -->
-                      </ul>
-                </div>
-          </div>
-      </div>
-  </div>
-</div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="formGroup.invalid">Login</button>
+  <button class="btn btn-lg btn-primary btn-block" type="button" (click)="accesoRapido()">Acceso Rapido</button>
+  <button class="btn btn-lg btn-primary btn-block" type="submit" routerLink="/registro">Registro</button>
+</form>

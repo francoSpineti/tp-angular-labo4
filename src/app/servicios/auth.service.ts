@@ -14,6 +14,8 @@ export class AuthService {
   private dbpath='/usuarios';
   users : Observable<Usuario[]>;
   mensajes !: AngularFirestoreCollection<any>;
+  data !: AngularFirestoreCollection<any>;
+  usuariosEnLinea !: Observable<any[]>;
 
   constructor(public firebaseAuth : AngularFireAuth, public router: Router,private afs: AngularFirestore) { 
     this.mensajes = afs.collection<any>(this.dbpath);
@@ -25,7 +27,8 @@ export class AuthService {
     .then(res =>{
       localStorage.setItem('user',JSON.stringify(res.user));
       this.guardarLog(email,"logueo");
-      this.router.navigate(['/home']);
+      this.guardarInfoChat(email,true);
+      this.router.navigate(['/menu']);
     },
     error => alert()
     );
@@ -36,7 +39,8 @@ export class AuthService {
       const result = await this.firebaseAuth.createUserWithEmailAndPassword(email, contraseña);
       localStorage.setItem('user',JSON.stringify(result.user));
       this.guardarLog(email,"registro");
-      this.router.navigate(['/home']);
+      this.guardarInfoChat(email,true);
+      this.router.navigate(['/menu']);
       return result;
     } catch (error) {
       throw error.message;
@@ -48,7 +52,10 @@ export class AuthService {
     let obj = localStorage.getItem('user');
     let cadena : any = obj?.split(":",6)[4];
     let email = cadena.split(",")[0];
-    this.guardarLog(email,"logout");
+    let email2 = email.split('"');
+    
+    this.guardarLog(email2[1],"logout");
+    this.guardarInfoChat(email2[1],false);
     localStorage.removeItem('user');
     this.router.navigate(['/']);
   }
@@ -58,6 +65,16 @@ export class AuthService {
     let log = new Log(date.toLocaleDateString(),email,accion);
     const id = this.afs.createId();
     return this.afs.collection('/logs').doc(id).set(log.toJson());
+  }
+
+  guardarInfoChat(email:string,status : boolean){
+    let usuario = new Usuario;
+    let date = new Date();
+    usuario.email = email;
+    usuario.status = status;
+    usuario.hora = date.toTimeString();
+    const id = this.afs.createId();
+    return this.afs.collection('/usuarioChat').doc(id).set(usuario.toJson());
   }
 
   async getCurrentUser(){

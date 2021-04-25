@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup ,Validators} from '@angular/forms';
 import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
@@ -8,23 +9,29 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-   email : string = "";
-   password : string = "";
+  formGroup !: FormGroup;
 
-  constructor(private authService : AuthService) { }
+  constructor(private authService : AuthService,private formBuilder : FormBuilder) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formGroup = this.formBuilder.group({
+      'email' : ['',[Validators.required,Validators.email]],
+      'contraseña' : ['',Validators.required]
+    });
+  }
 
    login(){
-    this.authService.iniciarSesion(this.email,this.password).then((result) => {
+     const email = this.formGroup.controls['email'].value;
+     const contraseña = this.formGroup.controls['contraseña'].value;
+    this.authService.iniciarSesion(email,contraseña).then((result) => {
     }).catch((error) => {
       alert("ERROR: datos incorrectos");
     });
   }
 
   accesoRapido(){
-    this.email = "ejemplo@a.com";
-    this.password = "123456";
+    this.formGroup.controls['email'].setValue("ejemplo@a.com");
+    this.formGroup.controls['contraseña'].setValue("123456");
   }
-
+  
 }
