@@ -1,0 +1,17 @@
+<!-- <mat-toolbar color="primary" class="text-center"> -->
+  <!-- </mat-toolbar> -->
+<app-navbar></app-navbar>
+
+<br>
+<br>
+<br>
+
+  <div class="p-16">
+ <!--    <p class="text-center">Tap on a card to flip it. You can only flip a maximum of two cards at a time. A match will
+      remove
+      those cards!</p> -->
+    <div class="grid p-16">
+      <app-carta-juego *ngFor="let c of listaCartas; let idx=index" [data]="c" (cardClicked)="cardClicked(idx)">
+      </app-carta-juego>
+    </div>
+  </div>

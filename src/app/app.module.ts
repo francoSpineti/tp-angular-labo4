@@ -10,7 +10,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from './componentes/menu/menu.component';
-import { MemotestComponent } from '../app/componentes/juegos/memotest/memotest.component';
 import { TatetiComponent } from '../app/componentes/juegos/tateti/tateti.component';
 import { PiedraPapelTijeraComponent } from '../app/componentes/juegos/piedra-papel-tijera/piedra-papel-tijera.component';
 import { IngresoRoutingModule } from './componentes/ingreso/ingreso-routing.module';
@@ -25,6 +24,17 @@ import { ChatBotonEnviarComponent } from './componentes/sala-chat/chat-boton-env
 import { SalaChatRoutingModule } from './componentes/sala-chat/sala-chat-routing.module';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { IndexComponent } from './componentes/juegos/index/index.component';
+import { SnakeComponent } from './componentes/juegos/snake/snake.component';
+import { BestScoreManager } from './componentes/juegos/snake/best-score-manager';
+import { EncuestaComponent } from './componentes/encuesta/encuesta.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { Memotest2Component } from './componentes/juegos/memotest2/memotest2.component';
+import { CartaJuegoComponent } from './componentes/juegos/memotest2/carta-juego/carta-juego.component';
+import { ReiniciarJuegoComponent } from './componentes/juegos/memotest2/reiniciar-juego/reiniciar-juego.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +42,6 @@ import { IndexComponent } from './componentes/juegos/index/index.component';
     QuienSoyComponent,
     ErrorComponent,
     MenuComponent,
-    MemotestComponent,
     TatetiComponent,
     PiedraPapelTijeraComponent,
     LoginComponent,
@@ -43,7 +52,12 @@ import { IndexComponent } from './componentes/juegos/index/index.component';
     ChatUsuariosConectadosComponent,
     ChatBotonEnviarComponent,
     NavbarComponent,
-    IndexComponent
+    IndexComponent,
+    SnakeComponent,
+    EncuestaComponent,
+    Memotest2Component,
+    CartaJuegoComponent,
+    ReiniciarJuegoComponent
   ],
   imports: [
     BrowserModule,
@@ -54,9 +68,14 @@ import { IndexComponent } from './componentes/juegos/index/index.component';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule
   ],
-  providers: [],
+  providers: [BestScoreManager],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

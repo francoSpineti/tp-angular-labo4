@@ -1,4 +1,4 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -11,19 +11,14 @@ import { Usuario } from '../clases/usuario';
 })
 export class AuthService {
 
-  private dbpath='/usuarios';
-  users : Observable<Usuario[]>;
-  mensajes !: AngularFirestoreCollection<any>;
   data !: AngularFirestoreCollection<any>;
   usuariosEnLinea !: Observable<any[]>;
 
-  constructor(public firebaseAuth : AngularFireAuth, public router: Router,private afs: AngularFirestore) { 
-    this.mensajes = afs.collection<any>(this.dbpath);
-    this.users = this.mensajes.valueChanges();
+  constructor(public firebaseAuth : AngularFireAuth, public router: Router,private afs: AngularFirestore) {     
   }
 
   async iniciarSesion(email : string, contraseña : string){
-    let result = await this.firebaseAuth.signInWithEmailAndPassword(email, contraseña)  // aca verifica con firebase el email y pass si existe
+    let result = await this.firebaseAuth.signInWithEmailAndPassword(email, contraseña)
     .then(res =>{
       localStorage.setItem('user',JSON.stringify(res.user));
       this.guardarLog(email,"logueo");
@@ -79,14 +74,6 @@ export class AuthService {
 
   async getCurrentUser(){
     return this.firebaseAuth.authState.pipe().toPromise();
-  }
-
-  getAll(){
-    return this.users;
-  }
-
-  create(mensaje:any):any{
-    return this.mensajes.add({...mensaje});
   }
 
 }
