@@ -1,18 +1,18 @@
 <div class="login-box">
   <h2>Login</h2>
   <form [formGroup]="formGroup" (ngSubmit)="login()">
-    <div class="user-box">
-      <input type="email" id="inputEmail" class="form-control" formControlName="email">
+    <div class="user-box" style="margin-bottom: 40px;">
+      <input type="email" id="inputEmail" class="form-control" formControlName="email"  style="margin-bottom: 0px;">
       <small class="invalid" *ngIf="formGroup.controls['email'].errors?.required && formGroup.controls['email'].touched">El email es requerido</small>
       <small class="invalid" *ngIf="formGroup.controls['email'].errors?.email && formGroup.controls['email'].touched">El formato es invalido</small>
       <label>Email</label>
     </div>
-    <div class="user-box">
-      <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" formControlName="contraseña">
+    <div class="user-box" style="margin-bottom: 40px;">
+      <input type="password" id="inputPassword" class="form-control"  formControlName="contraseña"  style="margin-bottom: 0px;">
       <small class="invalid" *ngIf="formGroup.controls['contraseña'].errors?.required && formGroup.controls['contraseña'].touched">La contraseña es requerida</small>
       <label>Password</label>
     </div>
-    <button  type="button" [disabled]="formGroup.invalid">
+    <button  type="submit" [disabled]="formGroup.invalid" style=" margin-right: 10px;">
       <span></span>
       <span></span>
       <span></span>
@@ -26,7 +26,7 @@
       <span></span>
       Registro
     </button>
-    <button (click)="accesoRapido()">
+    <button (click)="accesoRapido()" style="width: 306px; margin-top: 10px !important;">
       <span></span>
       <span></span>
       <span></span>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { FormBuilder, FormGroup ,Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-registro',
@@ -8,12 +9,19 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class RegistroComponent implements OnInit {
 
-  constructor(public authService : AuthService) { }
+  formGroupRegistro !: FormGroup;
+  constructor(public authService : AuthService,private formBuilder : FormBuilder) { }
 
   ngOnInit(): void {
+    this.formGroupRegistro = this.formBuilder.group({
+      'email' : ['',[Validators.required,Validators.email]],
+      'contraseña' : ['',Validators.required]
+    });
   }
 
-  crearCuenta(email : string,contraseña :string ){
+  crearCuenta(){
+    const email = this.formGroupRegistro.controls['email'].value;
+     const contraseña = this.formGroupRegistro.controls['contraseña'].value;
     this.authService.registrarse(email, contraseña)
         .then(result => {
             console.log('insert user');

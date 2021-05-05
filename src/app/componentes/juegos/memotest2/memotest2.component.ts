@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Resultado } from 'src/app/clases/resultado';
 import { PaisesService } from 'src/app/servicios/paises.service';
+import { ResultadoService } from 'src/app/servicios/resultado.service';
+import { DialogoEncuestaComponent } from '../dialogo-encuesta/dialogo-encuesta.component';
+import { DialogoComponent } from '../dialogo/dialogo.component';
 import { Carta } from './carta';
-import { ReiniciarJuegoComponent } from './reiniciar-juego/reiniciar-juego.component';
 import { TipoCarta } from './tipo-carta';
 
 @Component({
@@ -11,6 +14,8 @@ import { TipoCarta } from './tipo-carta';
   styleUrls: ['./memotest2.component.scss']
 })
 export class Memotest2Component implements OnInit {
+
+  puntaje : number;
 
   paises = [
     'Argentina',
@@ -34,16 +39,17 @@ export class Memotest2Component implements OnInit {
       .map(a => a[1]);
   }
 
-  constructor(private dialog: MatDialog,private paisService : PaisesService) {
+  constructor(private dialog: MatDialog,private paisService : PaisesService, private resultadoService : ResultadoService) {
+    this.puntaje = 0;
   }
 
   ngOnInit(): void {
-    //this.setupCards();
     this.getData(this.paises);
   }
 
   setupCards(): void {
     if(this.banderas.length== this.paises.length){
+      this.listaCartas = [];
       this.banderas.forEach((image) => {
         const cardData: Carta = {
           imagenID: image,
@@ -90,9 +96,15 @@ export class Memotest2Component implements OnInit {
         this.matchedCount++;
 
          if (this.matchedCount === this.paises.length) {
-          const dialogRef = this.dialog.open(ReiniciarJuegoComponent, {
-            disableClose: true
+          const dialogRef = this.dialog.open(DialogoComponent, {
+            data:{
+              titulo: "Ganaste!",
+              mensaje:"Sumaste 1 punto."
+            }
           });
+          this.puntaje++;
+          this.guardarResultado();
+          this.mostrarEncuesta();
 
           dialogRef.afterClosed().subscribe(() => {
             this.restart();
@@ -117,6 +129,29 @@ export class Memotest2Component implements OnInit {
           this.setupCards();
         });
     });
+  }
+
+  guardarResultado(){
+    let date = new Date();
+    let obj = localStorage.getItem('user');
+    let cadena : any = obj?.split(":",6)[4];
+    let email = cadena.split(",")[0];
+    let email2 = email.split('"');
+    let resultado = new Resultado("memotest",email2[1],date.toLocaleDateString(),this.puntaje);
+    this.resultadoService.guardar(resultado.toJson());
+  }
+
+  mostrarEncuesta(){
+    let numeroEncuesta = Math.round(Math.random()*100); //despues hacer random
+
+    if(numeroEncuesta == 48){
+      this.dialog.open(DialogoEncuestaComponent,{
+        data: {
+          titulo: 'Nos interesa tu opinión! Completas una encuesta?',
+          mensaje: 'Ir a Encuesta!'
+        }
+      });
+    }
   }
 
 }

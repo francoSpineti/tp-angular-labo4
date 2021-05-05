@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ResultadoService } from 'src/app/servicios/resultado.service';
 import { Tateti } from './tateti';
 
 @Component({
@@ -11,7 +12,7 @@ export class TatetiComponent implements OnInit {
 	objTateti : Tateti = new Tateti("","");
 	obj ?: any;
 
-	constructor() {
+	constructor(private resultadoService : ResultadoService) {
 	}
 
 	ngOnInit(): void {
@@ -22,7 +23,7 @@ export class TatetiComponent implements OnInit {
 	}
 
 	jugadaHumano(obj: any, valor1 : number, valor2 : number){
-		this.objTateti.jugadaHumano((<HTMLElement>document.getElementById(this.convertirEnTexto(valor1,valor2))),valor1,valor2);
+		this.objTateti.jugadaHumano((<HTMLElement>document.getElementById(this.convertirEnTexto(valor1,valor2))),valor1,valor2,this.resultadoService);
 	}
 
 	convertirEnTexto(valor1 : number, valor2 : number){

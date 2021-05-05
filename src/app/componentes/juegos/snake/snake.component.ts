@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Resultado } from 'src/app/clases/resultado';
+import { ResultadoService } from 'src/app/servicios/resultado.service';
+import { DialogoEncuestaComponent } from '../dialogo-encuesta/dialogo-encuesta.component';
 import { BestScoreManager } from '../snake/best-score-manager';
 import { CONTROLS, COLORS, BOARD_SIZE, GAME_MODES } from '../snake/constants';
 
@@ -42,9 +46,7 @@ export class SnakeComponent implements OnInit {
     y: -1
   };
 
-  constructor(
-    private bestScoreService: BestScoreManager
-  ) {
+  constructor(private bestScoreService: BestScoreManager, private resultadoService : ResultadoService,private dialog: MatDialog) {
     this.setBoard();
   }
 
@@ -219,7 +221,8 @@ export class SnakeComponent implements OnInit {
       this.best_score = this.score;
       this.newBestScore = true;
     }
- 
+    this.guardarResultado();
+    this.mostrarEncuesta();
     setTimeout(() => {
       me.isGameOver = false;
     }, 500);
@@ -279,5 +282,27 @@ export class SnakeComponent implements OnInit {
   ngOnInit(): void {
   }
   
+  guardarResultado(){
+    let date = new Date();
+    let obj = localStorage.getItem('user');
+    let cadena : any = obj?.split(":",6)[4];
+    let email = cadena.split(",")[0];
+    let email2 = email.split('"');
+    let resultado = new Resultado("snake",email2[1],date.toLocaleDateString(),this.best_score);
+    this.resultadoService.guardar(resultado.toJson());
+  }
+
+  mostrarEncuesta(){
+    let numeroEncuesta = Math.round(Math.random()*100); //despues hacer random
+
+    if(numeroEncuesta == 48){
+      this.dialog.open(DialogoEncuestaComponent,{
+        data: {
+          titulo: 'Nos interesa tu opinión! Completas una encuesta?',
+          mensaje: 'Ir a Encuesta!'
+        }
+      });
+    }
+  }
 
 }

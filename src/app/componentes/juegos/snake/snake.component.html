@@ -3,7 +3,7 @@
 <br>
 <br>
 
-<body>
+
 <div class="game-container">
     <div class="game-header">
       <h3 class="logo">Snake!</h3>
@@ -21,4 +21,4 @@
       <div class="start-button new-game-button" (click)="newGame(mode)" *ngFor="let mode of getKeys(all_modes)">{{all_modes[mode]}}</div>
     </div>
   </div>
-</body>
+  <app-footer-menu></app-footer-menu>

@@ -1,13 +1,13 @@
-<div class="card col-sm-4 " #scrollMe  [scrollTop]="scrollMe.scrollHeight">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
+<div class="  " #scrollMe  [scrollTop]="scrollMe.scrollHeight">
+    <ul class="list-group list-group-flush h-100">
+      <li class="list-group-item h-100 bg-dark">
           <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">Usuarios En Linea</h5>
+              <h5 class="mb-1 color-letra">Usuarios En Linea</h5>
           </div>
 
           <div class="card-body overflow-auto" style="height: 250px;" #scrollMe  [scrollTop]="scrollMe.scrollHeight">
-            <li *ngFor="let user of usuarios | keyvalue">
-              <a *ngIf="user.value==true"> {{user.key}} </a>
+            <li class="color-letra" *ngFor="let user of usuarios | keyvalue">
+              <a *ngIf="user.value==true" class="color-letra"> {{user.key}} </a>
           </li>
         </div>
 

@@ -1,7 +1,11 @@
+import { Resultado } from "src/app/clases/resultado";
+import { ResultadoService } from "src/app/servicios/resultado.service";
+
 export class Tateti {
 
     IDS: any = [['ceroCero', 'ceroUno', 'ceroDos'], ['unoCero', 'unoUno', 'unoDos'], ['dosCero', 'dosUno', 'dosDos']];
 
+    puntaje :number;
     empates: number = 0;
     ganadosComputadora: number = 0;
     ganadosHumano: number = 0;
@@ -12,6 +16,8 @@ export class Tateti {
     jugados: number = 0;
     tablero: Array<any>;    
 
+    resultadoService !: ResultadoService;
+
     constructor(fichaHu: string, turno: string) {
         this.tablero = [
             [{ ocupada: false, ficha: "", posicion: [0, 0] }, { ocupada: false, ficha: "", posicion: [0, 1] }, { ocupada: false, ficha: "", posicion: [0, 2] }],
@@ -20,6 +26,7 @@ export class Tateti {
         
         this.turno = turno, //h humano, c computadora
         this.jugados = 0;
+        this.puntaje = 0;
     }
 
     setFichaHumano(ficha: string) {
@@ -187,7 +194,7 @@ export class Tateti {
         return posicion;
     }
 
-    jugadaHumano(celda: HTMLElement, fila: number, columna: number) {
+    jugadaHumano(celda: HTMLElement, fila: number, columna: number,resultadoService : ResultadoService) {
         //antes tenés que ver si no está terminado el juego y si es el turno del jugador
         //no chequeo si es el turno del jugador
         //si en algún momento chequeara de quién es el turno, si no fuera del jugador llamaría a la jugada de la computadora.
@@ -201,6 +208,9 @@ export class Tateti {
                 this.mostrarTablero();
 
                 if (this.estaTerminado()) {
+                    //aca ganaste
+                    this.puntaje++;
+                    this.guardarResultado(resultadoService);
                     this.actualizarMarcador('h');
                     console.log("terminó Humano");
                     this.reset(this.fichaHumano, 'h');
@@ -214,7 +224,7 @@ export class Tateti {
                     this.cambiarTurno();
                     this.mostrarTurno();
                     console.log("turno: " + this.turno);
-                    this.jugadaComputadora(this);
+                    this.jugadaComputadora(this,resultadoService);
                 }
             } else {
                 console.log('ocupada');
@@ -222,7 +232,7 @@ export class Tateti {
         }
     }
 
-    jugadaComputadora(tateti : Tateti) {
+    jugadaComputadora(tateti : Tateti,resultadoService : ResultadoService) {
         //se podría modularizar un poco, encapsular y abstraer algunas partes de esta función...
         //se supone que es el turno de la computadora, no habría otra forma de llegar acá si no, del modo en que está escrito
         if (!tateti.estaTerminado()) {
@@ -259,6 +269,9 @@ export class Tateti {
 
             //chequea si con esa jugada se terminó el partido
             if (tateti.estaTerminado()) {
+                //aca perdiste
+                this.puntaje--;
+                this.guardarResultado(resultadoService);
                 tateti.actualizarMarcador('c');
                 console.log("terminó Computadora");
                 tateti.reset(tateti.fichaHumano, 'h');
@@ -278,6 +291,7 @@ export class Tateti {
         if (this.hay3EnLinea()) {
             (quienTermino == 'h') ? this.ganadosHumano++ : this.ganadosComputadora++;
         } else {
+            //aca poner empate
             this.empates++;
         }
     }
@@ -351,4 +365,13 @@ export class Tateti {
         this.mostrarMarcador();
     }
 
+    guardarResultado(resultadoService : ResultadoService){
+        let date = new Date();
+        let obj = localStorage.getItem('user');
+        let cadena : any = obj?.split(":",6)[4];
+        let email = cadena.split(",")[0];
+        let email2 = email.split('"');
+        let resultado = new Resultado("tateti",email2[1],date.toLocaleDateString(),this.puntaje);
+        resultadoService.guardar(resultado.toJson());
+      }
 }

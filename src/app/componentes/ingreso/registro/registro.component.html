@@ -1,24 +1,30 @@
-<div class="container">
-  <div class="row">
-      <div class="col-md-6">
-          <div class="card">
-              <form onsubmit="event.preventDefault()" class="box">
-                  <h1>Registro</h1>
-
-                  <input id="inputEmail" type="text" placeholder="Email" #userEmailRegis>
-
-                  <input id="inputPassword" type="password" placeholder="Contraseña" #userPasswordRegis>
-
-                  <input type="submit" (click)="crearCuenta(userEmailRegis.value, userPasswordRegis.value)" value="Registrarse">
-
-                  <input type="button"  routerLink="/"  value="Volver" >  <!--    ponerlo al lado    -->
-
-                  <div class="col-md-12">
-                      <ul class="social-network social-circle">
-                      </ul>
-                  </div>
-              </form>
-          </div>
+<div class="registro-box">
+    <h2>Registro</h2>
+    <form [formGroup]="formGroupRegistro" (ngSubmit)="crearCuenta()">
+      <div class="registro-user-box" style="margin-bottom: 25px;">
+        <input type="email" id="inputEmail" class="form-control" formControlName="email">
+        <small class="invalid" *ngIf="formGroupRegistro.controls['email'].errors?.required && formGroupRegistro.controls['email'].touched">El email es requerido</small>
+        <small class="invalid" *ngIf="formGroupRegistro.controls['email'].errors?.email && formGroupRegistro.controls['email'].touched">El formato es invalido</small>
+        <label>Email</label>
       </div>
+      <div class="registro-user-box" style="margin-bottom: 25px;">
+        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" formControlName="contraseña">
+        <small class="invalid" *ngIf="formGroupRegistro.controls['contraseña'].errors?.required && formGroupRegistro.controls['contraseña'].touched">La contraseña es requerida</small>
+        <label>Password</label>
+      </div>
+      <button type="button" [disabled]="formGroupRegistro.invalid" style="width: 318px;">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Registrarse
+      </button>
+      <button routerLink="" style="width: 318px; margin-top: 10px !important;">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Volver
+      </button>
+    </form>
   </div>
-</div>

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Resultado } from 'src/app/clases/resultado';
+import { ResultadoService } from 'src/app/servicios/resultado.service';
+import { DialogoEncuestaComponent } from '../dialogo-encuesta/dialogo-encuesta.component';
+import { DialogoComponent } from '../dialogo/dialogo.component';
 
 @Component({
   selector: 'app-piedra-papel-tijera',
@@ -7,11 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PiedraPapelTijeraComponent implements OnInit {
 
-  constructor() { }
+  puntaje : number = 0;
+
+  constructor(public dialog: MatDialog,private resultadoService : ResultadoService) { }
 
   ngOnInit(): void {
   }
-//var opciones = ["piedra", "papel", "tijera"];
    opciones = [0, 1, 2];
    eleccionMaquina : number = 0;
 
@@ -25,13 +31,35 @@ export class PiedraPapelTijeraComponent implements OnInit {
     
     if(eleccionUsuario == 0){//el usuario eligio piedra 
         if(this.opciones[this.eleccionMaquina] == 1){//si la maquina eligio papel 
-            (<HTMLElement>document.getElementById('efecto')).innerHTML ='<h1>¡Perdiste!</h1> <h3>La maquina eligio papel y tu piedra.</h3>';
+          this.puntaje = this.puntaje - 5;
+          this.guardarResultado();
+            this.dialog.open(DialogoComponent,{
+              data: {
+                titulo: 'PERDISTE',
+                mensaje: 'Se te restaron 5 puntos.'
+              }
+            });
         }else{
             if(this.opciones[this.eleccionMaquina] == 2){
-              (<HTMLElement>document.getElementById('efecto')).innerHTML ='<h1>¡Ganaste!</h1> <h3>La maquina eligio tijera y tu piedra.</h3>';
+              this.puntaje = this.puntaje + 25;
+              this.guardarResultado();
+              this.dialog.open(DialogoComponent,{
+                width: '250px',
+                data: {
+                  titulo: 'GANASTE',
+                  mensaje: 'Sumaste 25 puntos.'
+                }
+              });
+              this.mostrarEncuesta();
             }else{
                 if(this.opciones[this.eleccionMaquina] == 0){
-                  (<HTMLElement>document.getElementById('efecto')).innerHTML ='<h1>¡Empate!</h1> <h3>Ambos eligieron piedra.</h3>';
+                  this.dialog.open(DialogoComponent,{
+                    width: '250px',
+                    data: {
+                      titulo: 'EMPATE',
+                      mensaje: 'No se suman puntos.'
+                    }
+                  });
                 }
             }
         } 
@@ -39,14 +67,36 @@ export class PiedraPapelTijeraComponent implements OnInit {
 
     if(eleccionUsuario == 1){//el usuario eligio papel 
         if(this.opciones[this.eleccionMaquina] == 2){
-          (<HTMLElement>document.getElementById('efecto')).innerHTML ='<h1>¡Perdiste!</h1> <h3>La maquina eligio tijera y tu papel.</h3>';
+          this.puntaje = this.puntaje - 5;
+          this.guardarResultado();
+          this.dialog.open(DialogoComponent,{
+            data: {
+              titulo: 'PERDISTE',
+              mensaje: 'Se te restaron 5 puntos.'
+            }
+          });
         }else{
             if(this.opciones[this.eleccionMaquina] == 0){
-              (<HTMLElement>document.getElementById('efecto')).innerHTML ='<h1>¡Ganaste!</h1> <h3>La maquina eligio piedra y tu papel.</h3>';
-                
+              this.puntaje = this.puntaje + 25;
+              this.guardarResultado();
+              this.dialog.open(DialogoComponent,{
+                width: '250px',
+                data: {
+                  titulo: 'GANASTE',
+                  mensaje: 'Sumaste 25 puntos.'
+                }
+              });
+              this.dialog.closeAll();
+              this.mostrarEncuesta();
             }else{
                 if(this.opciones[this.eleccionMaquina] == 1){
-                  (<HTMLElement>document.getElementById('efecto')).innerHTML ='<h1>¡Empate!</h1> <h3>Ambos eligieron papel.</h3>'; 
+                  this.dialog.open(DialogoComponent,{
+                    width: '250px',
+                    data: {
+                      titulo: 'EMPATE',
+                      mensaje: 'No se suman puntos.'
+                    }
+                  });
                 }
             }
         }
@@ -54,23 +104,63 @@ export class PiedraPapelTijeraComponent implements OnInit {
 
     if(eleccionUsuario == 2) {//el usuario eligio tijera 
         if(this.opciones[this.eleccionMaquina] == 1){
-          (<HTMLElement>document.getElementById('efecto')).innerHTML ='<h1>¡Ganaste!</h1> <h3>La maquina eligio papel y tu tijera.</h3>';
+          this.puntaje = this.puntaje + 25;
+          this.guardarResultado();
+          this.dialog.open(DialogoComponent,{
+            width: '250px',
+            data: {
+              titulo: 'GANASTE',
+              mensaje: 'Sumaste 25 puntos.'
+            }
+          });
+          this.dialog.closeAll();
+          this.mostrarEncuesta();
         }else{
             if(this.opciones[this.eleccionMaquina] == 0){
-              (<HTMLElement>document.getElementById('efecto')).innerHTML ='<h1>¡Perdiste!</h1> <h3>La maquina eligio piedra y tu tijera.</h3>'; 
+              this.puntaje = this.puntaje - 5;
+              this.guardarResultado();
+              this.dialog.open(DialogoComponent,{
+                data: {
+                  titulo: 'PERDISTE',
+                  mensaje: 'Se te restaron 5 puntos.'
+                }
+              });
             }else{
                 if(this.opciones[this.eleccionMaquina] == 2) {
-                  (<HTMLElement>document.getElementById('efecto')).innerHTML ='<h1>¡Empate!</h1> <h3>Ambos eligieron tijera.</h3>';
+                  this.dialog.open(DialogoComponent,{
+                    width: '250px',
+                    data: {
+                      titulo: 'EMPATE',
+                      mensaje: 'No se suman puntos.'
+                    }
+                  });
                 }
             }
         }
     }
-
-    (<HTMLElement>document.getElementById('efecto')).style.display = "";
 }
 
- quitarEfecto() {
-  (<HTMLElement>document.getElementById('efecto')).style.display = "none";
- }
+  guardarResultado(){
+    let date = new Date();
+    let obj = localStorage.getItem('user');
+    let cadena : any = obj?.split(":",6)[4];
+    let email = cadena.split(",")[0];
+    let email2 = email.split('"');
+    let resultado = new Resultado("ppt",email2[1],date.toLocaleDateString(),this.puntaje);
+    this.resultadoService.guardar(resultado.toJson());
+  }
+
+  mostrarEncuesta(){
+    let numeroEncuesta = Math.round(Math.random()*100); //despues hacer random
+
+    if(numeroEncuesta == 48){
+      this.dialog.open(DialogoEncuestaComponent,{
+        data: {
+          titulo: 'Nos interesa tu opinión! Completas una encuesta?',
+          mensaje: 'Ir a Encuesta!'
+        }
+      });
+    }
+  }
 
 }
