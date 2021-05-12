@@ -7,7 +7,7 @@
 
           <div class="card-body overflow-auto" style="height: 250px;" #scrollMe  [scrollTop]="scrollMe.scrollHeight">
             <li class="color-letra" *ngFor="let user of usuarios | keyvalue">
-              <a *ngIf="user.value==true" class="color-letra"> {{user.key}} </a>
+              <a *ngIf="user.value==true" (change)="actualizar()" class="color-letra"> {{user.key}} </a>
           </li>
         </div>
 

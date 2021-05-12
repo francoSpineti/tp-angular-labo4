@@ -8,21 +8,12 @@ import { Observable } from 'rxjs';
 export class ChatService {
 
   private dbPath = '/chatMensajes';
-  private dbPathUser = '/usuarioChat';
-
-  data !: AngularFirestoreCollection<any>;
+  dataMensajes !: AngularFirestoreCollection<any>;
   chatMensajes : Observable<any[]>;
-  usuariosEnLinea : Observable<any[]>;
 
   constructor(private db : AngularFirestore) { 
-    this.data = db.collection<any>(this.dbPath,ref => ref.orderBy('horaEnvio'));
-    this.chatMensajes = this.data.valueChanges(this.dbPath);
-    this.data = db.collection<any>(this.dbPathUser,ref => ref.orderBy('hora'));
-    this.usuariosEnLinea = this.data.valueChanges(this.dbPathUser);
-  }
-
-  obtenerUsuariosEnLinea(){
-    return this.usuariosEnLinea;
+    this.dataMensajes = db.collection<any>(this.dbPath,ref => ref.orderBy('horaEnvio'));
+    this.chatMensajes = this.dataMensajes.valueChanges(this.dbPath);
   }
 
   obtenerMensajes(){
@@ -30,7 +21,7 @@ export class ChatService {
   }
 
   enviarMensaje(mensaje : any) : any{
-    return this.data.add({ ...mensaje });
+    return this.dataMensajes.add({ ...mensaje });
   }
 
 }

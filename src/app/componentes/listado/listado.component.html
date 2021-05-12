@@ -1,0 +1,48 @@
+<div class="centrarTabla" style="height: 45px;">
+<div class="table-wrapper-scroll-y my-custom-scrollbar" >
+  <h4> Listado de Jugadores </h4>
+<mat-tab-group>
+  <mat-tab label="Memotest">
+    <table ng-table="tableParams" border="1" class="table table-bordered table-striped mb-0">
+      <tbody>
+        <tr *ngFor="let user of mapMemotest | keyvalue">
+          <td>{{user.key}}</td>
+          <td>{{user.value}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+  <mat-tab label="Tateti">
+    <table ng-table="tableParams" class="table table-bordered table-striped mb-0">
+      <tbody>
+        <tr *ngFor="let user of mapTateti | keyvalue">
+          <td>{{user.key}}</td>
+          <td>{{user.value}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+  <mat-tab label="Piedra,Papel y Tijera">
+    <table ng-table="tableParams" class="table table-bordered table-striped mb-0">
+      <tbody>
+        <tr *ngFor="let user of mapPPT | keyvalue">
+          <td>{{user.key}}</td>
+          <td>{{user.value}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+  <mat-tab label="Snake">
+    <table ng-table="tableParams" class="table table-bordered table-striped mb-0">
+      <tbody>
+        <tr *ngFor="let user of mapSnake | keyvalue">
+          <td>{{user.key}}</td>
+          <td>{{user.value}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+</mat-tab-group>
+</div>
+</div>
+

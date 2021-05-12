@@ -2,13 +2,12 @@ export class Resultado {
 
     juego : string = "";
     usuario : string = "";
-    hora : string = "";
+    hora = new Date();
     puntaje : number = 0;
 
-    constructor(juego : string, usuario : string, hora : string, puntaje : number){
+    constructor(juego : string, usuario : string, puntaje : number){
         this.juego = juego;
         this.usuario = usuario;
-        this.hora = hora;
         this.puntaje = puntaje;
     }
 

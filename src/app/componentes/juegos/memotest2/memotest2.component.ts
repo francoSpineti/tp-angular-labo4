@@ -132,12 +132,11 @@ export class Memotest2Component implements OnInit {
   }
 
   guardarResultado(){
-    let date = new Date();
     let obj = localStorage.getItem('user');
     let cadena : any = obj?.split(":",6)[4];
     let email = cadena.split(",")[0];
     let email2 = email.split('"');
-    let resultado = new Resultado("memotest",email2[1],date.toLocaleDateString(),this.puntaje);
+    let resultado = new Resultado("memotest",email2[1],this.puntaje);
     this.resultadoService.guardar(resultado.toJson());
   }
 

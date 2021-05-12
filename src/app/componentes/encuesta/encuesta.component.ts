@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl,FormBuilder, FormGroup ,Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Encuesta } from 'src/app/clases/encuesta';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
+import { DialogoComponent } from '../juegos/dialogo/dialogo.component';
 
 @Component({
   selector: 'app-encuesta',
@@ -12,7 +14,7 @@ export class EncuestaComponent implements OnInit {
 
   formGroup !: FormGroup;
 
-  constructor(private formBuilder : FormBuilder,private service: EncuestaService) { }
+  constructor(private formBuilder : FormBuilder,private service: EncuestaService,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
@@ -32,6 +34,13 @@ export class EncuestaComponent implements OnInit {
     this.formGroup.controls['email'].value, this.formGroup.controls['edad'].value, parseInt(this.formGroup.controls['telefono'].value),
     this.formGroup.controls['pregunta1'].value,this.formGroup.controls['pregunta2'].value,this.formGroup.controls['pregunta3'].value);
     this.service.guardar(encuesta.toJson());
+    this.dialog.open(DialogoComponent,{
+      data: {
+        titulo: 'Gracias!',
+        mensaje: 'La encuesta se guardo con exito!'
+      }
+    });
+    this.limpiar();
   }
 
   private spacesValidator(control : AbstractControl) : null | object{
@@ -39,4 +48,16 @@ export class EncuestaComponent implements OnInit {
     const espacios = nombre.includes(' ');
     return espacios == true? {contieneEspacios : true} : null;
   }
+
+  limpiar(){
+    this.formGroup.controls['nombre'].setValue(''); 
+    this.formGroup.controls['apellido'].setValue(''); 
+    this.formGroup.controls['edad'].setValue(''); 
+    this.formGroup.controls['email'].setValue(''); 
+    this.formGroup.controls['telefono'].setValue(''); 
+    this.formGroup.controls['pregunta1'].setValue(''); 
+    this.formGroup.controls['pregunta2'].setValue(''); 
+    this.formGroup.controls['pregunta3'].setValue('');
+  }
+
 }

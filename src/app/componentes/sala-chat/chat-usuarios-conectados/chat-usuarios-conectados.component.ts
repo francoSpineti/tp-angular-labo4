@@ -1,18 +1,18 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { ChatService } from 'src/app/servicios/chat.service';
+import { UsuariosConectadosService } from 'src/app/servicios/usuarios-conectados.service';
 
 @Component({
   selector: 'app-chat-usuarios-conectados',
   templateUrl: './chat-usuarios-conectados.component.html',
   styleUrls: ['./chat-usuarios-conectados.component.css']
 })
-export class ChatUsuariosConectadosComponent implements OnInit,OnChanges {
+export class ChatUsuariosConectadosComponent implements OnInit {
 
   usuarios = new Map();
   arreglo : any;
 
-  constructor(private chatService : ChatService) {
-    this.chatService.obtenerUsuariosEnLinea().subscribe(user =>{
+  constructor(private usuariosConectadosService : UsuariosConectadosService) {
+    this.usuariosConectadosService.obtenerUsuariosEnLinea().subscribe(user =>{
       this.arreglo = user;
 
       for (let index = 0; index < this.arreglo.length; index++) {
@@ -38,16 +38,16 @@ export class ChatUsuariosConectadosComponent implements OnInit,OnChanges {
     this.usuarios;
   }
 
-  ngOnChanges():void{
-    this.usuarios;
+  actualizar(){
+    return this.usuarios;
   }
 
-    getMap(){
-        return this.usuarios;
-    }
+  getMap(){
+     return this.usuarios;
+  }
 
-    setMap(key : any,value : any){
-        this.usuarios.set(key,value);
-    }
+  setMap(key : any,value : any){
+     this.usuarios.set(key,value);
+  }
 
 }

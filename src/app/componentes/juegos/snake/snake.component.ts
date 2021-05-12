@@ -283,12 +283,11 @@ export class SnakeComponent implements OnInit {
   }
   
   guardarResultado(){
-    let date = new Date();
     let obj = localStorage.getItem('user');
     let cadena : any = obj?.split(":",6)[4];
     let email = cadena.split(",")[0];
     let email2 = email.split('"');
-    let resultado = new Resultado("snake",email2[1],date.toLocaleDateString(),this.best_score);
+    let resultado = new Resultado("snake",email2[1],this.best_score);
     this.resultadoService.guardar(resultado.toJson());
   }
 

@@ -366,12 +366,11 @@ export class Tateti {
     }
 
     guardarResultado(resultadoService : ResultadoService){
-        let date = new Date();
         let obj = localStorage.getItem('user');
         let cadena : any = obj?.split(":",6)[4];
         let email = cadena.split(",")[0];
         let email2 = email.split('"');
-        let resultado = new Resultado("tateti",email2[1],date.toLocaleDateString(),this.puntaje);
+        let resultado = new Resultado("tateti",email2[1],this.puntaje);
         resultadoService.guardar(resultado.toJson());
       }
 }

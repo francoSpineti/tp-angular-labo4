@@ -35,6 +35,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { Memotest2Component } from './componentes/juegos/memotest2/memotest2.component';
 import { CartaJuegoComponent } from './componentes/juegos/memotest2/carta-juego/carta-juego.component';
 import { ReiniciarJuegoComponent } from './componentes/juegos/memotest2/reiniciar-juego/reiniciar-juego.component';
+import { ListadoComponent } from './componentes/listado/listado.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -57,7 +61,8 @@ import { ReiniciarJuegoComponent } from './componentes/juegos/memotest2/reinicia
     EncuestaComponent,
     Memotest2Component,
     CartaJuegoComponent,
-    ReiniciarJuegoComponent
+    ReiniciarJuegoComponent,
+    ListadoComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +78,10 @@ import { ReiniciarJuegoComponent } from './componentes/juegos/memotest2/reinicia
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [BestScoreManager],
   bootstrap: [AppComponent]

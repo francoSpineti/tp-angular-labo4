@@ -50,7 +50,6 @@ export class PiedraPapelTijeraComponent implements OnInit {
                   mensaje: 'Sumaste 25 puntos.'
                 }
               });
-              this.mostrarEncuesta();
             }else{
                 if(this.opciones[this.eleccionMaquina] == 0){
                   this.dialog.open(DialogoComponent,{
@@ -62,7 +61,8 @@ export class PiedraPapelTijeraComponent implements OnInit {
                   });
                 }
             }
-        } 
+        }
+        this.mostrarEncuesta();
     }
 
     if(eleccionUsuario == 1){//el usuario eligio papel 
@@ -86,8 +86,6 @@ export class PiedraPapelTijeraComponent implements OnInit {
                   mensaje: 'Sumaste 25 puntos.'
                 }
               });
-              this.dialog.closeAll();
-              this.mostrarEncuesta();
             }else{
                 if(this.opciones[this.eleccionMaquina] == 1){
                   this.dialog.open(DialogoComponent,{
@@ -100,6 +98,7 @@ export class PiedraPapelTijeraComponent implements OnInit {
                 }
             }
         }
+        this.mostrarEncuesta();
     }
 
     if(eleccionUsuario == 2) {//el usuario eligio tijera 
@@ -113,8 +112,6 @@ export class PiedraPapelTijeraComponent implements OnInit {
               mensaje: 'Sumaste 25 puntos.'
             }
           });
-          this.dialog.closeAll();
-          this.mostrarEncuesta();
         }else{
             if(this.opciones[this.eleccionMaquina] == 0){
               this.puntaje = this.puntaje - 5;
@@ -137,23 +134,23 @@ export class PiedraPapelTijeraComponent implements OnInit {
                 }
             }
         }
+        this.mostrarEncuesta();
     }
 }
 
   guardarResultado(){
-    let date = new Date();
     let obj = localStorage.getItem('user');
     let cadena : any = obj?.split(":",6)[4];
     let email = cadena.split(",")[0];
     let email2 = email.split('"');
-    let resultado = new Resultado("ppt",email2[1],date.toLocaleDateString(),this.puntaje);
+    let resultado = new Resultado("ppt",email2[1],this.puntaje);
     this.resultadoService.guardar(resultado.toJson());
   }
 
   mostrarEncuesta(){
-    let numeroEncuesta = Math.round(Math.random()*100); //despues hacer random
+    let numeroEncuesta = Math.round(Math.random()*100);
 
-    if(numeroEncuesta == 48){
+    if(numeroEncuesta == 1){
       this.dialog.open(DialogoEncuestaComponent,{
         data: {
           titulo: 'Nos interesa tu opinión! Completas una encuesta?',

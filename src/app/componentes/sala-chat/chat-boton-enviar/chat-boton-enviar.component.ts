@@ -20,9 +20,10 @@ export class ChatBotonEnviarComponent implements OnInit {
     let obj = localStorage.getItem('user');
     let cadena : any = obj?.split(":",6)[4];
     let email = cadena.split(",")[0];
+    let email2 = email.split('"');
 
     this.mensajeChat.horaEnvio;
-    this.mensajeChat.usuario = email;
+    this.mensajeChat.usuario = email2[1];
     this.chatService.enviarMensaje(this.mensajeChat);
     this.mensajeChat.mensaje="";
   }
